@@ -21,3 +21,4 @@ steps:
 
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/ci-cd-demo/app'
+
