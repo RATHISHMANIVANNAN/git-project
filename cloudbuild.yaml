@@ -1,11 +1,21 @@
 steps:
   # Step 1: Build Docker image from app.py and Dockerfile in repo root
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/app-image', '.']
+    args:
+      [
+        'build',
+        '-t',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/app-repo/app-image',
+        '.'
+      ]
 
   # Step 2: Push the image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/app-image']
+    args:
+      [
+        'push',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/app-repo/app-image'
+      ]
 
   # Step 3: Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -13,17 +23,14 @@ steps:
     args:
       [
         'run', 'deploy', 'git-project-app',
-        '--image', 'us-central1-docker.pkg.dev/$PROJECT_ID/app-image',
+        '--image', 'us-central1-docker.pkg.dev/$PROJECT_ID/app-repo/app-image',
         '--region', 'us-central1',
         '--platform', 'managed',
         '--allow-unauthenticated'
       ]
 
-# Track the image created
 images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/app-image'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/app-repo/app-image'
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
-serviceAccount: projects/git-project-477116/serviceAccounts/cloud-build-sa@git-project-477116.iam.gserviceaccount.com
