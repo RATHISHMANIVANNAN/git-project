@@ -1,26 +1,27 @@
 steps:
-  # Step 1: Build Docker image
+  # Step 1: Build Docker image from app.py and Dockerfile in repo root
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/app', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/app-image', '.']
 
-  # Step 2: Push image to Artifact Registry
+  # Step 2: Push the image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/app']
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/app-image']
 
   # Step 3: Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       [
-        'run', 'deploy', 'ci-cd-demo-app',
-        '--image', 'us-central1-docker.pkg.dev/$PROJECT_ID/app',
+        'run', 'deploy', 'git-project-app',
+        '--image', 'us-central1-docker.pkg.dev/$PROJECT_ID/app-image',
         '--region', 'us-central1',
         '--platform', 'managed',
         '--allow-unauthenticated'
       ]
 
+# Track the image created
 images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/app'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/app-image'
 
 options:
   logging: CLOUD_LOGGING_ONLY
