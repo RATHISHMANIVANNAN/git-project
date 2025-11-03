@@ -22,3 +22,7 @@ steps:
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/ci-cd-demo/app'
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+serviceAccount: projects/$git-project-477116/serviceAccounts/cloud-build-sa@$git-project-477116.iam.gserviceaccount.com
