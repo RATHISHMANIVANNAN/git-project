@@ -64,7 +64,7 @@ def home():
     <body>
         <div class="container">
             <h1>🚀 Deployment Successful!</h1>
-            <p>Updated <strong>Version 3</strong> has been successfully deployed using an automated <strong>CI/CD pipeline</strong> through <strong>Google Cloud Platform (GCP)</strong>.</p>
+            <p>Updated <strong>Version 5</strong> has been successfully deployed using an automated <strong>CI/CD pipeline</strong> through <strong>Google Cloud Platform (GCP)</strong>.</p>
             <span class="version-badge">Version 3</span>
             <footer>
                 <p>© 2025 CI/CD Automated Deployment | Flask + GCP</p>
